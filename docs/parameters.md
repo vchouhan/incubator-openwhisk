@@ -96,7 +96,7 @@ Rather than pass all the parameters to an action every time, you can bind certai
   ```
 
   ```json
-  {  
+  {
       "payload": "Hello, Dorothy from Washington, DC"
   }
   ```
@@ -179,3 +179,34 @@ It's also possible to put parameters into a file in JSON format, and then pass t
       "payload": "Hello, Dorothy from Kansas"
   }
   ```
+
+ ### Default Params and Event Params
+As stated above the parameters set at the default level serve as default params to the action, a trigger event also attaches the payload to the params message array object. In the following case where your params is populated through an event via MessageHub publish triggers, the event and default parameter will be merged as part of the messaage[{}]
+
+Your have added default params
+```
+tenant = test
+user = admin
+password = admin
+```
+
+Your messagehub payload
+```
+Object {name: "testuser", email: "testuser@test.org", iui: "0000000000", …}
+```
+
+The default and events params can be accessed at message[{}.user] and message[{}.value].
+
+```
+message: [{
+    "key":"Key"
+    "offset":147
+    "partition":0
+    "topic":"consents"
+    "url":"https://someapp.mybluemix.net/"
+    "value":Object {name: "testuser", email: "testuser@test.org", iui: "0000000000", …}
+    "password":"admin"
+    "tenant":"test"
+    "user":"admin"
+}]
+```
